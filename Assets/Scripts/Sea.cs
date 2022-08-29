@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Sea : MonoBehaviour
 {
-    [SerializeField] int width;
-    [SerializeField] int height;
-    [SerializeField] float squareSize;
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [SerializeField] private float squareSize;
 
-    void Start()
+    private void Start()
     {
         MakeMesh();
     }
 
-    void MakeMesh()
+    private void MakeMesh()
     {
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         Mesh mesh = new Mesh();

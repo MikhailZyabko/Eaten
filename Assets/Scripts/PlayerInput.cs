@@ -10,10 +10,11 @@ public class PlayerInput : MonoBehaviour
         _mover = GetComponent<PlayerMover>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+
 
         /*if (Input.GetKeyDown(KeyCode.W))
         {

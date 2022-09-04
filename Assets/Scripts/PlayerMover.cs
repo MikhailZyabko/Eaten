@@ -1,10 +1,17 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMover : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private MovementSurface _surface;
     [SerializeField] private float _speed = 4f;
+
+    private Rigidbody _rigidBody;
+
+    private void Awake()
+    {
+        _rigidBody = GetComponent<Rigidbody>();
+    }
 
     public void Move(Vector3 direction)
     {

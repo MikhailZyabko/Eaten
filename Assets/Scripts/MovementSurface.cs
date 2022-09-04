@@ -7,11 +7,12 @@ public class MovementSurface : MonoBehaviour
 
     public Vector3 MovementVector(Vector3 forward)
     {
-        return Vector3.Dot(forward, _normal) * _normal;
+        return forward - Vector3.Dot(forward, _normal) * _normal;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision);
         _normal = collision.contacts[0].normal;
     }
 }

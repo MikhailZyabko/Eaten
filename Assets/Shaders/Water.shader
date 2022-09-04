@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 Shader "Unlit/Water"
 {
     Properties
@@ -84,20 +82,16 @@ Shader "Unlit/Water"
 				
                 v2f o;
 				float4 t = mul(unity_ObjectToWorld, v.vertex);
-				float dx = 0;
-				float dz = 0;
 				
 				for(int i = 0; i < 5; i++)
 				{
 					t.y += find_offset(t, waves[i]);
-					dx += find_offsetdx(t, waves[i]);
-					dz += find_offsetdz(t, waves[i]);
 				}
 				
 				//o.vertex = UnityObjectToClipPos(t);
 				o.vertex = mul(UNITY_MATRIX_VP, t);
 				o.worldPos = t;
-				o.normal = normalize(mul(unity_ObjectToWorld, float3(-dx, 1, -dz)));
+				o.normal = v.normal;
 				//o.normal = normal;
 				
                 return o;
@@ -105,12 +99,30 @@ Shader "Unlit/Water"
 
             fixed4 frag (v2f i) : SV_Target
             {
+				float dx = 0;
+				float dz = 0;
+				
+				Wave waves[5] = {
+					{_Amplitude, 1, _Freaquency, _Dir.xz},
+					{1.5 * _Amplitude, 1.5, 0.5 * _Freaquency, _Dir.zx},
+					{2.5 * _Amplitude, 0.5, 0.1 * _Freaquency, float2(0.5, 0.5)},
+					{0.5 * _Amplitude, 2.5, 1.5 * _Freaquency, float2(-0.4, -0.6)},
+					{0.2 * _Amplitude, 0.75, 5 * _Freaquency, float2(-0.2, 0.8)}
+				};
+				
+				for(int j = 0; j < 5; j++)
+				{
+					dx += find_offsetdx(i.worldPos, waves[j]);
+					dz += find_offsetdz(i.worldPos, waves[j]);
+				}
+			
+				float3 n = mul(unity_ObjectToWorld, normalize(float3(-dx, 1, -dz)));
 				float3 l = normalize(_WorldSpaceLightPos0);
 				float3 v = normalize(_WorldSpaceCameraPos - i.worldPos);
-				float3 r = reflect(v, i.normal);
-				fixed3 diff = _Color * max(0.6, dot(l, i.normal)) * _LightColor0;
-				fixed4 spec = pow(max(0, dot(r, l)), 50) * _LightColor0;
-                return fixed4(diff, 1);
+				float3 r = reflect(-v, n);
+				fixed3 diff = _Color * max(0.6, dot(l, n)) * _LightColor0;
+				fixed4 spec = pow(max(0, dot(r, l)), 20) * _LightColor0;
+                return fixed4(diff + spec, 1);
 				return fixed4(i.normal, 1);
 				return _Color;
             }

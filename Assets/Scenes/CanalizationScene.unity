@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1644,8 +1644,8 @@ MonoBehaviour:
   _camera: {fileID: 1365410256}
   _speedX: 45
   _speedY: 30
-  limitY: 40
-  _targetHideDistance: 0.54
+  limitY: 25
+  _targetHideDistance: 0.5
   _obstacles:
     serializedVersion: 2
     m_Bits: 64
@@ -1774,8 +1774,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.18, y: 1.19, z: 1.92}
-  m_Center: {x: 0, y: 0.56, z: 0}
+  m_Size: {x: 1.18, y: 1.1899998, z: 2.3931544}
+  m_Center: {x: 0, y: 0.56000006, z: 0.23657717}
 --- !u!95 &1591592236
 Animator:
   serializedVersion: 3
@@ -1833,7 +1833,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 1591592233}
   _surface: {fileID: 1591592237}
-  _speed: 4
+  _moveSpeed: 0.5
+  _turnSpeed: 10
 --- !u!1 &1623481680 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -458137698552360233, guid: a1a153a17bfa7a448ad37dbbc63f3f8e, type: 3}

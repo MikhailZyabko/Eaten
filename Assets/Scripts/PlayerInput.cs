@@ -15,11 +15,7 @@ public class PlayerInput : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        /*if (Input.GetKeyDown(KeyCode.W))
-        {
-            _mover.Move(Vector3.forward);
-        }*/
-
-        _mover.Move(new Vector3(-vertical, 0, horizontal));
+        _mover.MoveForward(new Vector3(0, 0, vertical));
+        _mover.MakeTurn(new Vector3(0, horizontal, 0));
     }
 }

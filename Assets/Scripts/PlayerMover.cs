@@ -6,6 +6,7 @@ public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 1f;
     [SerializeField] private float _turnSpeed = .5f;
+    [SerializeField] private float _jumpForce = 1f;
 
     private MovementSurface _surface;
     private Rigidbody _rigidBody;
@@ -30,5 +31,10 @@ public class PlayerMover : MonoBehaviour
     public void MakeTurn(Quaternion turn)
     {
         _rigidBody.MoveRotation(_rigidBody.rotation * turn);       
+    }
+
+    public void MakeJump(Vector3 jump)
+    {
+        _rigidBody.position += jump * _jumpForce;
     }
 }

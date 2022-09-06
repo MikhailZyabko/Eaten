@@ -3,23 +3,36 @@ using UnityEngine;
 public class CameraMover : MonoBehaviour
 {
     [SerializeField] private Transform _target;
+
+    [SerializeField] private Vector3 _offset;
+
     [SerializeField] private Camera _camera;
+
     [SerializeField] private float _speedX = 360f;
     [SerializeField] private float _speedY = 240f;
     [SerializeField] private float limitY = 40f;
+    [SerializeField] private float limitX = 40f;
     [SerializeField] private float _targetHideDistance = 2f;
+
     [SerializeField] private LayerMask _obstacles;
     [SerializeField] private LayerMask _noPlayer;
 
     private float _maxCameraDistance;
     private float _currentYRotation;
+
     private Vector3 _localPosition;
+
     private LayerMask _cameraOriginMask;
 
     private Vector3 _position 
     { 
         get { return transform.position; }
         set { transform.position = value;}
+    }
+
+    private void OnEnable()
+    {
+        transform.position = _target.position + _offset;
     }
 
     private void Start()
@@ -57,7 +70,8 @@ public class CameraMover : MonoBehaviour
 
         if (mouseX != 0)
         {
-            transform.RotateAround(_target.position, Vector3.up, mouseX * _speedX * Time.deltaTime);
+            var tmp = Mathf.Clamp(mouseX * _speedX * Time.deltaTime, -limitX, limitX);
+            transform.RotateAround(_target.position, Vector3.up, tmp);
         }
 
         transform.LookAt(_target);
